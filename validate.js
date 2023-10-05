@@ -152,23 +152,61 @@ let controlString = parseInt(idcode.slice(10, 11))
 // output and idcode validator
 
 if(controlVal != calcNum){
-	return `Isikukoodi kontrollnumber on vale.
-    <br>
-    <br>
-    <a href="/">Valideeri uus isikukood</a>`
+	return `    
+    <!doctype html>
+    <html lang="en">
+        <head>
+            <title>isikukoodi valideerimine</title>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        </head>
+        <body>
+            <div class="container">
+                <h2>Väär isikukood</h2>
+                <form action="/validate" method="POST">
+                    <div class="form-group mb-3">
+                        <p>Teie isikukood on väär, sisestage korralik isikukood.</p>
+                    </div>   
+                </form>
+                <form action="/" method="GET">
+                    <div class="d grid mt-3">
+                        <button class="btn btn-primary form-control">Tagasi</button> 
+                    </div>
+                </form>
+            </div>
+        </body>
+    </html>`
 } else {
     return `
-    Isikukood ${idcode}
-    <br>
-    <br>
-    ${isGender()}
-    kes on sündinud ${dayVal}. ${monthString} ${newYearVal}. aastal. (.${birthDateVal}.).
-    Tema on registreeritud ${regisrtyString}, (.${regisrtyVal}.)
-    ja sel päeval oli ta ${bornString}soost isik (...${bornVal}.).
-    Isikukoodi kontrollnumbriks on ${controlString}. (...${controlString}).
-    <br>
-    <br>
-    <a href="/">Valideeri uus isikukood</a>
+    <!doctype html>
+    <html lang="en">
+        <head>
+            <title>isikukoodi valideerimine</title>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        </head>
+        <body>
+            <div class="container">
+                <h2>Isikukood ${idcode}</h2>
+                <form action="/validate" method="POST">
+                    <div class="form-group mb-3">
+                        ${isGender()}
+                        kes on sündinud ${dayVal}. ${monthString} ${newYearVal}. aastal. (.${birthDateVal}.).
+                        Tema on registreeritud ${regisrtyString}, (.${regisrtyVal}.)
+                        ja sel päeval oli ta ${bornString}soost isik (...${bornVal}.).
+                        Isikukoodi kontrollnumbriks on ${controlString}. (...${controlString}).
+                    </div>   
+                </form>
+                <form action="/" method="GET">
+                    <div class="d grid mt-3">
+                        <button class="btn btn-primary form-control">Tagasi</button> 
+                    </div>
+                </form>
+            </div>
+        </body>
+    </html>
     `
 }}
 
