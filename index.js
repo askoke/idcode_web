@@ -10,15 +10,32 @@ app.set('views', path.join(__dirname, 'views'))
 const parseUrl = require('body-parser');
 let encodeUrl = parseUrl.urlencoded({ extended: true });
 
+let error = null
 app.get('/', (req, res) => {
-  res.render('validate_form')
+  res.render('page', {
+    data: null,
+    error: error
+  })
 })
 
 
 const validId = require('./validate')
 
-app.post('/validate', encodeUrl, (req, res) => {
-  res.send(validId.idInfo(req.body.idcode))
+app.post('/', encodeUrl, (req, res) => {
+  let error = null
+  if(req.body.idcode === ''){
+    error = 'Palun sisesta vormis andmed'
+  } else if(req.body.idcode.length < 11) {
+    error = 'Palun sisesta korrektne isikukood'
+  }
+  if(error === null){
+    res.render('page', {
+      data: validId.idInfo(req.body.idcode),
+      error: null
+    })
+  } else {
+    res.render('page', {data:null, error: error})
+  }
 })
 
 app.listen(3000, () => {
